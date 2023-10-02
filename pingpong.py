@@ -33,7 +33,11 @@ display.set_caption('PingPong')
 background = transform.scale(image.load('stol.jpg'),(win_width, win_height))
 run = True
 
-ball = GameSprite('boll.png', 80, 50, 10, 105, 75)
+speed_x =3
+speed_y =3
+finish = False
+
+ball = GameSprite('boll.png', 380, 50, 10, 105, 75)
 player1 = Player('PLA1.jpg', 10, 300, 10, 30, 130)
 player2 = Player('PLA1.jpg', 670, 300, 10, 30, 130)
 
@@ -43,6 +47,13 @@ while run:
             run = False
     window.blit(background, (0, 0))
 
+    if finish != True:
+        ball.rect.x += speed_x
+        ball.rect.y += speed_y
+    
+    if sprite.collide_rect(player1, ball) or sprite.collide_rect(player2,ball):
+        speed_x *= -1
+
     ball.reset()
     player1.update_l()
     player1.reset()
@@ -51,5 +62,3 @@ while run:
     
     display.update()
     time.delay(50)
-
-
