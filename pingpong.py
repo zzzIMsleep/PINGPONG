@@ -36,6 +36,11 @@ run = True
 speed_x =3
 speed_y =3
 finish = False
+font.init()
+font1 = font.Font(None, 35)
+lose1 = font1.render(' Player 1 LOSE!', True, (180,0,0))
+font2 = font.Font(None, 35)
+lose2 = font2.render(' Player 2 LOSE!', True, (180,0,0))
 
 ball = GameSprite('boll.png', 380, 50, 10, 105, 75)
 player1 = Player('PLA1.jpg', 10, 300, 10, 30, 130)
@@ -53,7 +58,14 @@ while run:
     
     if sprite.collide_rect(player1, ball) or sprite.collide_rect(player2,ball):
         speed_x *= -1
-
+    if ball.rect.x < 0:
+        finish = True
+        window.blit(lose1, (200,200))
+    if ball.rect.x > win_width - 50:
+        finish = True
+        window.blit(lose2, (200,200))
+    if ball.rect.y > win_height-50 or ball.rect.y <0:
+        speed_y *= -1
     ball.reset()
     player1.update_l()
     player1.reset()
